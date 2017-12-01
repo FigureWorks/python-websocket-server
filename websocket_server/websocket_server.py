@@ -177,7 +177,7 @@ class WebSocketHandler(StreamRequestHandler):
             if not self.handshake_done:
                 self.handshake()
             elif self.valid_client:
-                self.read_next_message()
+                pass
 
     def read_bytes(self, num):
         # python3 gives ordinal of byte directly
@@ -290,7 +290,10 @@ class WebSocketHandler(StreamRequestHandler):
             raise Exception("Message is too big. Consider breaking it into chunks.")
             return
 
-        self.request.send(header + payload)
+        try:
+            self.request.send(header + payload)
+        except:
+            pass
 
     def handshake(self):
         message = self.request.recv(1024).decode().strip()
